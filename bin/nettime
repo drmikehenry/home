@@ -1,0 +1,27 @@
+#!/bin/bash
+
+JUNK_FILE="$1"
+
+if [ "$JUNK_FILE" == "" ]; then
+    cat << EOF
+Usage: nettime JUNK_FILE
+
+Removes and creates JUNK_FILE bracketed by local time to test time
+synchronization on remote filesystem.
+EOF
+    exit
+fi
+
+showdate()
+{
+    echo -ne "$1\tLocal time: "
+    date '+%H:%M:%S.%N'
+}
+
+rm -f "$JUNK_FILE"
+showdate "Before"
+true > "$JUNK_FILE"
+showdate "After"
+echo "Below is file data stamp"
+
+ls -l --full-time "$JUNK_FILE"

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+rm -rf export
+findx -L .svn,.bzr,.git -prune -o \
+    'bak,build,pkgexp,*.opt,*.ncb,*.plg,.sconsign.dblite' -print0 : rm -rf

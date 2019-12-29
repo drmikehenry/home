@@ -1,0 +1,52 @@
+#!/usr/bin/env python3
+
+import argparse
+import glob
+import os
+
+
+def find_up(path_to_find, root=""):
+    while True:
+        p = os.path.join(root, path_to_find)
+        matches = glob.glob(p)
+        for m in sorted(matches):
+            yield m
+        old_root = root
+        root = os.path.join(root, os.path.pardir)
+        if os.path.abspath(root) == os.path.abspath(old_root):
+            break
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        metavar="PATH_TO_FIND",
+        dest="path_to_find",
+        action="store",
+        help="The PATH to locate",
+    )
+    parser.add_argument(
+        "--start",
+        metavar="START_DIR",
+        dest="start_dir",
+        action="store",
+        default="",
+        help="starting directory for upward search (default: %(default)r)",
+    )
+    parser.add_argument(
+        "-a",
+        "--abs",
+        dest="absolute",
+        action="store_true",
+        help="generate absolute paths",
+    )
+
+    args = parser.parse_args()
+    for m in find_up(args.path_to_find):
+        if args.absolute:
+            m = os.path.abspath(m)
+        print(m)
+
+
+if __name__ == "__main__":
+    main()

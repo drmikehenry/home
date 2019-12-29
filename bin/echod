@@ -1,0 +1,15 @@
+#!/usr/bin/env python3
+
+import textwrap
+import sys
+
+args = sys.argv[1:]
+out = sys.stdout
+while args:
+    arg = args.pop(0)
+    if arg == "-o":
+        out = open(args.pop(0), "w")
+    elif arg == "-a":
+        out = open(args.pop(0), "a")
+    else:
+        out.write(textwrap.dedent(arg).strip() + "\n")

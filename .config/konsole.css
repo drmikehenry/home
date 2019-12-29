@@ -1,0 +1,18 @@
+QTabBar::tab:selected {
+	background: lightblue;
+
+	/* bolder: */
+	/* background: skyblue; */
+
+	/* background: lightskyblue; */
+
+	/* pretty much same as lightblue: */
+	/* background: powderblue; */
+
+	/* greenish: */
+	/* background: cyan; */
+	/* background: aquamarine; */
+
+	color: black;
+	font: bold;
+}

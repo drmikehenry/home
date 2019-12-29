@@ -1,0 +1,3 @@
+#!/bin/sh
+
+dcop ksmserver default saveCurrentSession

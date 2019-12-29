@@ -1,0 +1,84 @@
+#!/bin/sh
+
+# Ported from ksh script originally by Jon LaBadie from NoVaLUG.
+
+Progname=${0##*/}
+PatType=anywhere # valid values are anywhere, begin, end, or exact
+
+# Only a single, first option is allowed.
+usage() {
+    ExitStatus="${1:-1}"
+    m="$Progname [[-a|--anywhere]|[-b|--begin]|[-e|--end]|[-x|--exact]] name(s)"
+    if [ "$ExitStatus" = 0 ]; then
+        echo "$m"
+    else
+        echo "$m" >&2
+    fi
+    exit "$ExitStatus"
+}
+
+# allow -? to mean -h i.e. help
+if [ "$1" = '-?' ]; then
+    shift
+    set -- -h "$@"
+fi
+
+if getopts 'a(anywhere)b(begin)e(end)h(help)x(exact)' opt 2> /dev/null; then
+    # echo getopts_rtrn "$?" opt :$opt: OPTIND :$OPTIND: OPTARG :$OPTARG:
+    case $opt in
+    a)
+        PatType=anywhere
+        shift
+        ;;
+    b)
+        PatType=begin
+        shift
+        ;;
+    e)
+        PatType=end
+        shift
+        ;;
+    x)
+        PatType=exact
+        shift
+        ;;
+    h)
+        usage 0
+        ;;
+    ?)
+        printf "%s: Invalid option: %s\n" "$Progname" "$1"
+        usage
+        ;;
+    esac
+fi
+
+# Must have at least one pattern to search for
+[ $# -gt 0 ] || usage
+
+for arg; do
+    case $PatType in
+    anywhere) arg="*$arg*" ;;
+    begin) arg="$arg*" ;;
+    end) arg="*$arg" ;;
+    exact) arg="$arg" ;;
+    *) # This is a programming error
+        echo "$Progname: variable \$arg set to invalid value: $arg" >&2
+        exit 13
+        ;;
+    esac
+
+    p="$PATH"
+    test -n "$p" && p="$p:"
+    while [ "$p" != '' ]; do
+        dir="${p%%:*}"
+        # Empty $dir implies current working directory; therefore use slash only
+        # when $dir is non-empty.
+        [ -n "$dir" ] && dir="$dir/"
+        p="${p#*:}"
+        for cmd in $dir$arg; do
+            if [ -f "$cmd" ] && [ -x "$cmd" ]; then
+                printf '%s\n' "$cmd"
+            fi
+        done
+    done
+done | sort

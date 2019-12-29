@@ -1,0 +1,40 @@
+#!/bin/bash
+
+joinRegex()
+{
+    rex="$1"
+    shift
+    for i in "$@"; do
+        rex="$rex|$i"
+    done
+    printf "%s" "$rex"
+}
+
+mrfilter()
+{
+    ignorePattern=$(joinRegex \
+        '^$' \
+        '^Performing status on external item' \
+        '^X       ' \
+        '^At revision ' \
+        )
+
+    grep -E -v --line-buffered "$ignorePattern" |
+        ptee \
+            --regex '^mr (status|update|push): /' \
+            --regex '^(Everything|Already) up.to.date' \
+            --regex '^\s*$' \
+            --heading-regex '^mr \S+: finished '
+}
+
+isatty()
+{
+    # Test whether stdout is a terminal.
+    tty -s 0<&1
+}
+
+if isatty; then
+    mr "$@" 2>&1 | mrfilter
+else
+    mr "$@"
+fi

@@ -1,0 +1,7 @@
+#!/usr/bin/env python3
+
+import sys
+import binascii
+
+for line in sys.stdin:
+    sys.stdout.buffer.write(binascii.unhexlify(line.strip()))

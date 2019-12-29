@@ -1,0 +1,93 @@
+#!/usr/bin/env python3
+
+import os
+import os.path
+import sys
+import argparse
+
+
+__version__ = "0.3.0"
+
+
+description = """
+Determine EOL style for given files.
+
+"""
+
+prog_name = sys.argv[0]
+
+
+class GroupError(Exception):
+    pass
+
+
+class Args(argparse.Namespace):
+    def __init__(self):
+        argparse.Namespace.__init__(self)
+
+
+def inner_main():
+    parser = argparse.ArgumentParser(
+        description=description,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+
+    parser.add_argument("--version", action="version", version=__version__)
+    parser.add_argument(
+        "paths",
+        nargs="*",
+        metavar="FILES",
+        help="""files to examine for EOL style""",
+    )
+
+    parser.add_argument(
+        "-b",
+        "--brief",
+        action="store_true",
+        dest="brief",
+        default=False,
+        help="""be brief; avoid printing filenames""",
+    )
+
+    global args
+    args = parser.parse_args(namespace=Args())
+
+    for path in args.paths:
+        if os.path.isfile(path):
+            try:
+                f = open(path, "U")
+                f.read()
+                eol_style = f.newlines
+                if eol_style == "":
+                    eol_label = "None"
+                elif eol_style == "\r":
+                    eol_label = "CR"
+                elif eol_style == "\n":
+                    eol_label = "LF"
+                elif eol_style == "\r\n":
+                    eol_label = "CRLF"
+                else:
+                    eol_label = "Unknown"
+
+            except IOError:
+                eol_label = "Unreadable"
+        else:
+            eol_label = "Not a file"
+
+        if args.brief:
+            path_label = ""
+        else:
+            path_label = (path + ":").ljust(23) + " "
+        print(path_label + eol_label)
+
+
+def main():
+    try:
+        inner_main()
+    except GroupError as e:
+        print("%s: %s" % (prog_name, e))
+        sys.exit(2)
+
+
+if __name__ == "__main__":
+    main()

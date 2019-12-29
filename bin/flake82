@@ -1,0 +1,3 @@
+#!/bin/sh
+
+exec /usr/local/lib/pipsi2/bin/flake8 "$@"

@@ -1,0 +1,18 @@
+#!/bin/sh
+
+if [ -d "$HOME/.home.git" ] && [ -d "$HOME/.home2.git" ]; then
+    echo "Updating home.git and home2.git ignores"
+    export GIT_WORK_TREE="$HOME"
+    cd "$GIT_WORK_TREE" || {
+        echo "Failed to cd to $GIT_WORK_TREE"
+        exit 1
+    }
+
+    GIT_DIR="$HOME/.home.git" git ls-files > "$HOME/.home2.git/info/exclude"
+    GIT_DIR="$HOME/.home2.git" git ls-files > "$HOME/.home.git/info/exclude"
+
+    if [ -f "$HOME/.gitignore2" ]; then
+        cat "$HOME/.gitignore2" >> "$HOME/.home.git/info/exclude"
+        cat "$HOME/.gitignore2" >> "$HOME/.home2.git/info/exclude"
+    fi
+fi

@@ -1,0 +1,3 @@
+#!/bin/sh
+
+prargs "$@" > /tmp/logargs.out

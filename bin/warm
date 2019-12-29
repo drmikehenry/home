@@ -1,0 +1,19 @@
+#!/bin/bash
+# Warm up a directory in the disk cache.
+
+if [ "$1" == "" ]; then
+    cat <<'EOF'
+Usage: warm DIR+
+
+Warms disk cache for a list of directories by doing a ``find`` over the
+entire tree, and by reading the text of the files returned by ``ffx``.
+EOF
+    exit 1
+fi
+
+for path in "$@"; do
+    if [ -d "$path" ]; then
+        find "$path" -printf ''
+        ffx "$path" : cat > /dev/null
+    fi
+done

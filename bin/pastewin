@@ -1,0 +1,40 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+    cat <<'EOF'
+Usage: pastewin WINDOWPATTERN
+
+Uses ``xdotool`` to paste into another window using
+the ``Shift+Insert`` shortcut.  This works for Konsole
+(the primary use case) and might work for other apps
+as well.
+
+WINDOWPATTERN is matched against the window name, class,
+and classname.  Exactly one window must match; if more
+or fewer match, nothing is done.
+EOF
+    exit 1
+fi
+
+die()
+{
+    echo "$@" 1>&2
+    exit 2
+}
+
+pattern="$1"
+
+oldwin=$(xdotool getwindowfocus) ||
+    die "Could not determine old window"
+
+newwin=$(xdotool search --onlyvisible --name --class --classname "$pattern") ||
+    die "failed to find matching window"
+
+# If replacing newlines with spaces changes things, found 2 or more windows.
+newwin2=${newwin//$'\n'/ }
+[ "$newwin" == "$newwin2" ] ||
+    die "matched multiple windows: $newwin2"
+
+xdotool windowactivate --sync "$newwin" &&
+    xdotool key 'shift+Insert' &&
+    xdotool windowactivate --sync "$oldwin"

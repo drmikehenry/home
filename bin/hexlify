@@ -1,0 +1,10 @@
+#!/usr/bin/env python3
+
+import sys
+import binascii
+
+while True:
+    data = sys.stdin.buffer.read(32)
+    if not data:
+        break
+    sys.stdout.write(binascii.hexlify(data).decode("ascii") + "\n")

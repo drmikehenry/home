@@ -1,0 +1,9 @@
+#!/bin/bash
+
+CHROME=/usr/bin/google-chrome
+
+if [ ! -x "$CHROME" ]; then
+    CHROME=/opt/google/chrome/chrome
+fi
+
+"$CHROME" --password-store=detect "$@"

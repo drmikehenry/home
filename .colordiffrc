@@ -1,0 +1,6 @@
+# Settings for colordiff.
+plain=darkwhite
+newtext=darkgreen
+oldtext=darkred
+diffstuff=darkcyan
+cvsstuff=white

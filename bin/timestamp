@@ -1,0 +1,82 @@
+#!/usr/bin/env python3
+
+"""Generate timestamped lines from stdin.
+
+"""
+
+import sys
+import argparse
+import time
+
+
+__version__ = "0.1.1"
+
+
+description = """
+Generate timestamped lines from stdin.
+
+"""
+
+prog_name = sys.argv[0]
+"""Track name of script for error messages."""
+
+
+class GroupError(Exception):
+    """Base error class."""
+
+    pass
+
+
+# Hold parsed arguments in a "namespace", which may have member functions and
+# allows for more control over storage of argument values.
+# Argument values are stored here as regular attributes that match the
+# name given in the add_argument() call.
+class Args(argparse.Namespace):
+    """Holds parsed arguments for use with argparse."""
+
+    def __init__(self):
+        argparse.Namespace.__init__(self)
+
+
+def inner_main():
+    """Inner main function.
+
+    """
+    parser = argparse.ArgumentParser(
+        description=description,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+
+    parser.add_argument("--version", action="version", version=__version__)
+    parser.add_argument(
+        "--delta",
+        action="store_true",
+        dest="use_delta_time",
+        default=False,
+        help="""use delta times on each line""",
+    )
+
+    args = parser.parse_args(namespace=Args())
+    last_time = time.time()
+    for line in sys.stdin:
+        now = time.time()
+        if args.use_delta_time:
+            t = now - last_time
+        else:
+            t = now
+        sys.stdout.write("%.9f %s" % (t, line))
+        last_time = now
+
+
+def main():
+    try:
+        inner_main()
+    except KeyboardInterrupt:
+        pass
+    except GroupError as e:
+        sys.stderr.write("%s: %s" % (prog_name, e))
+        sys.exit(2)
+
+
+if __name__ == "__main__":
+    main()

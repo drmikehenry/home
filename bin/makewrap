@@ -1,0 +1,21 @@
+#!/bin/bash
+
+FFMAKE=$(type -P ffmake)
+test -n "$FFMAKE" || FFMAKE=make
+
+mkdir -p build/build.log.d
+
+log1=build/build.log
+log2=build/build.log.d/$(date +'%Y-%m-%d-%H%M.%S')
+
+$FFMAKE "$@" 2>&1 | errorfilter | ptee $log1 $log2 \
+    --regex '^\s+\[.+\]'   \
+    --regex '^\w*make\[\d+\]: (`|Entering |Leaving |Nothing )' \
+    --regex '^\w*make -r ' \
+    --regex '^\w+ finished$' \
+    --regex '^(\S*/)?\bgcc\s' \
+    --regex '^\s+Creating library.*$' \
+    --regex '^([^\s])+\.c(pp|xx|\+\+)?\s*$' \
+    --heading-regex '^Building ' \
+
+exit ${PIPESTATUS[0]}

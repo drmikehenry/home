@@ -1,0 +1,71 @@
+[user]
+	name = Michael Henry
+	# Note: Override the email address by setting environment variables:
+	# export GIT_AUTHOR_EMAIL="address@example.com"
+	# export GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
+	email = drmikehenry@drmikehenry.com
+
+[core]
+	editor = vim
+
+	# Setup ``less`` flags as git wants them.  Note that without this line,
+	# git will defer to the ``LESS`` environment variable for flags, which
+	# may not have the right set of options.  By default, git would like
+	# the following flags:
+	#
+	#   -F  --quit-if-one-screen
+	#   -R  --RAW-CONTROL-CHARS (but only for color escape sequences)
+	#   -S  --chop-long-lines
+	#   -X  --no-init (disable the termcap init/fini strings, which
+	#                  will eliminate clearing of the screen)
+	# Additions beyond what git prefers:
+	#   -i  --ignore-case
+	pager = less -FRSXi
+
+	### No need to explicitly set a global ignore file; by default, git
+	### will look in $XDG_CONFIG_HOME/git/ignore (or if XDG_CONFIG_HOME
+	### is empty or not set, ~/.config/git/ignore).  This avoids the need
+	### to put a full path here (which fails when this is shared with
+	### root who does not have access to NFS-mounted /home/).
+	###excludesfile = /home/mrhenr1/.gitglobalignore
+
+[merge]
+	tool = meld
+
+[alias]
+	br = branch
+	co = checkout
+	ci = commit
+	st = status
+	diffc = diff --cached
+	unadd = reset HEAD --
+	unstage = reset HEAD --
+	uncommit = reset --soft HEAD^
+	amend = commit -a --amend
+	last = log -1 HEAD
+	ls = ls-files
+
+[color "branch"]
+	upstream = blue bold
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[diff]
+	algorithm = histogram
+# Testing shows file: over NFS is 1.5 seconds for "mr push", while
+# over ssh: it takes 25 seconds (for all projects as individual repos).
+# With ssh connection reuse, it's 6 seconds.  Generally, we'll use
+# NFS, but when on the road, can change to ssh: below to perform
+# remote git operations.
+[url "file:///m/srv/git/"]
+	insteadof = wench:
+#[url "ssh://wench/srv/git/"]
+#	insteadof = wench:
+
+[github]
+	user = drmikehenry
+[push]
+	default = simple

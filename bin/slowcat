@@ -1,0 +1,46 @@
+#!/usr/bin/env python3
+
+import argparse
+import fileinput
+import sys
+import time
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "-d",
+        dest="delay",
+        type=float,
+        default=0.1,
+        help="delay between lines in seconds (default %(default)s)",
+    )
+    parser.add_argument(
+        dest="files",
+        nargs="*",
+        help='files to read (empty or "-" implies use stdin)',
+    )
+    args = parser.parse_args()
+    try:
+        for line in fileinput.input(args.files):
+            time.sleep(args.delay)
+            sys.stdout.write(line)
+            sys.stdout.flush()
+    except BrokenPipeError:
+        # In order to avoid this ugly output:
+        #   Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w'
+        #     encoding='UTF-8'>
+        #   BrokenPipeError: [Errno 32] Broken pipe
+        # It's necessary to catch the BrokenPipeError; however, another one
+        # will be thrown by the interpreter at shutdown when stdout is closed;
+        # therefore, close stdout ourselves and catch this possible second
+        # exception to squelch things.
+        try:
+            sys.stdout.close()
+
+        except BrokenPipeError:
+            pass
+
+
+if __name__ == "__main__":
+    main()

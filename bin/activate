@@ -1,0 +1,26 @@
+#!/bin/bash
+
+app="$1"
+wclass="${2:-$1}"
+
+if [ -z "$app" ]; then
+    cat <<EOF
+Usage: activate appname [window_class]
+
+Activates existing instance of appname or launches a new one.
+EOF
+    exit 1
+fi
+
+if ! wmctrl -xa "$wclass"; then
+    $app &
+    sleep 0.5
+fi
+
+# Though the app raises, sometimes it doesn't get focus unless
+# another attempt is made to activate it.
+
+# wmctrl -xa "$wclass"
+# wmctrl -xa "$wclass"
+# wmctrl -xa "$wclass"
+# wmctrl -xa "$wclass"

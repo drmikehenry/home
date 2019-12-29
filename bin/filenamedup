@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+
+import sys
+import os
+
+
+def main():
+    names = {}
+    for line in sys.stdin:
+        path = line.strip()
+        prefix, name = os.path.split(path)
+        if name in names:
+            names[name].append(path)
+        else:
+            names[name] = [path]
+
+    for name in sorted(names):
+        if len(names[name]) > 1:
+            print("[%s]" % name)
+            print("\n".join(sorted(names[name])) + "\n")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,3 @@
+#!/bin/sh
+
+find ~/.ssh -maxdepth 1 -name 'id_*' -not -name '*.pub' -print

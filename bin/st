@@ -1,0 +1,30 @@
+#!/bin/bash
+
+function isatty()
+{
+    # Test whether stdout is a terminal.
+    tty 0<&1 > /dev/null
+}
+
+if isatty && type -p svnwrap > /dev/null; then
+    SVN=svnwrap
+else
+    SVN=svn
+fi
+
+here="$PWD"
+while true; do
+    if [ -d "$here/.svn" ]; then
+        $SVN st "$@"
+        break
+    elif [ -d "$here/.git" ]; then
+        git st "$@"
+        break
+    else
+        here=$(dirname "$here")
+        if [ "$here" == "/" ]; then
+            echo "No VCS detected"
+            exit 1
+        fi
+    fi
+done

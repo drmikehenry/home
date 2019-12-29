@@ -1,0 +1,53 @@
+#!/usr/bin/env python3
+
+import os
+import argparse
+
+
+def fix_path_case(broken_path, root="."):
+    """ Attempt to improve each component of broken_path by case laundering
+        to match actual case of names in filesystem, leaving unknown
+        components unchanged.  The broken_path is relative to root.
+    """
+
+    if not broken_path:
+        return broken_path
+    base, name = os.path.split(broken_path)
+    if base != broken_path:
+        base = fix_path_case(base, root=root)
+    try:
+        names = os.listdir(os.path.join(root, base))
+    except OSError:
+        names = [name]
+    if name not in names:
+        lower_name = name.lower()
+        for f in names:
+            if lower_name == f.lower():
+                name = f
+                break
+    fixed_path = os.path.join(base, name)
+    return fixed_path
+
+
+if __name__ == "__main__":
+    usage = """
+%prog [--root ROOT] PATH...
+
+Fix case of pathnames relative to current directory or options ROOT
+"""
+    parser = argparse.ArgumentParser(usage)
+    parser.add_argument(
+        "-r",
+        "--root",
+        dest="root",
+        default=".",
+        help="set root directory",
+        metavar="ROOT",
+    )
+    parser.add_argument(
+        dest="paths", nargs="+", help="set root directory", metavar="PATH"
+    )
+    args = parser.parse_args()
+
+    for path in args.paths:
+        print(fix_path_case(path, root=args.root))

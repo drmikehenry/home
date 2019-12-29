@@ -1,0 +1,28 @@
+#!/bin/sh
+
+bundle_file=${1:-}
+
+if [ -z "$bundle_file" ]; then
+    cat <<EOF
+Usage: gitbundlecreate path/to/some.bundle
+EOF
+    exit 1
+fi
+
+rm -f "$bundle_file"
+bundle_branch="sent/$(date '+%Y%m%d_%H%M%S')"
+git branch -q "$bundle_branch" master
+if git show-ref sent/last > /dev/null; then
+    git bundle create "$bundle_file" sent/last..master "$bundle_branch" --tags
+else
+    git bundle create "$bundle_file" master "$bundle_branch" --tags --branches
+fi
+if [ $? = 0 ]; then
+    echo
+    echo "Bundle branch $bundle_branch"
+    git branch --force sent/last master
+else
+    echo
+    echo 'Skipping bundle operation.'
+    git branch -D "$bundle_branch" > /dev/null
+fi

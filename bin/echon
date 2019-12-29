@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Echoes $1 copies of whatever follows.  All switches and arguments from $2
+# onward are passed to the echo command.
+
+count=${1:-1}
+shift
+
+i=0
+while [ $i -lt "$count" ]
+do
+    echo "$@"
+    i=$((i + 1))
+done

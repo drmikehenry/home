@@ -1,0 +1,12 @@
+#!/bin/sh
+
+exec 1> ~/tmp/logall.txt
+
+echo '== PWD'
+pwd
+
+echo '== environment'
+printenv
+
+echo '== args'
+prargs

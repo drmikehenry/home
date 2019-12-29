@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Passes paths from stdin to stdout if paths are files.
+
+while read i; do
+    if [ -f "$i" ]; then
+        echo "$i"
+    fi
+done

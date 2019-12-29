@@ -1,0 +1,41 @@
+#!/bin/bash
+
+base_cmd=( rsync
+    -xrt
+    --delete
+    --exclude 'build'
+    --exclude 'pkgexp'
+    --exclude 'export'
+    --exclude 'target'
+    --exclude '__pycache__'
+    --exclude '*.pyc'
+    --exclude '.mypy_cache'
+    --exclude '.pytest_cache'
+    --exclude '*.egg-info'
+    --exclude 'dist'
+    --exclude '.tox'
+    --exclude '.coverage*'
+    --exclude '*.exe'
+    --exclude '*.lib'
+    --exclude '*.pdb'
+    --exclude '*.suo'
+    --exclude 'tags'
+    --exclude '.*.swp'
+    --exclude '*.out'
+    --exclude '.fifo'
+    --exclude '.sconsign.dblite'
+    --exclude '/reexport.tmp'
+    )
+
+if [ $# -lt 2 ]; then
+    cat << EOF
+Usage: ssync [RSYNC_OPTIONS] SRC/ DEST/
+
+Copy source files with standard exclusions.  Base command is:
+${base_cmd[@]}
+EOF
+    exit 1
+fi
+
+# Run the base command along with any options.
+"${base_cmd[@]}" "$@"

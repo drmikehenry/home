@@ -1,0 +1,11 @@
+#!/bin/sh
+
+LOGFILE=$HOME/tmp/logtty.out
+
+exec 4>&1
+
+out0="stdin:  $(tty)"
+out1="stdout: $(tty 0<&4)"
+out2="stderr: $(tty 0<&2)"
+
+{ echo "$out0"; echo "$out1"; echo "$out2"; } >> "$LOGFILE"

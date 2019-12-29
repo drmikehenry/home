@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Usage: extname FILE+
+# For each supplied FILE, display filename extension (or empty line if none).
+
+shopt -s extglob
+
+for path in "$@"; do
+    pathWithoutExt=${path%.*([^/])}
+    ext=${path:${#pathWithoutExt}}
+    echo "$ext"
+done

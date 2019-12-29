@@ -1,0 +1,35 @@
+BasedOnStyle: Google
+
+BinPackArguments: false
+BinPackParameters: false
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterClass:      true
+  AfterControlStatement: true
+  AfterEnum:       true
+  AfterFunction:   true
+  AfterNamespace:  true
+  AfterObjCDeclaration: true
+  AfterStruct:     true
+  AfterUnion:      true
+  AfterExternBlock: true
+  BeforeCatch:     true
+  BeforeElse:      true
+  # IndentBraces:    false
+  SplitEmptyFunction: true
+  SplitEmptyRecord: true
+  SplitEmptyNamespace: true
+
+AlignAfterOpenBracket: AlwaysBreak
+# AlignEscapedNewlines: Left
+AlignEscapedNewlines: DontAlign
+AlignOperands:   false
+AllowShortFunctionsOnASingleLine: None
+# AllowShortIfStatementsOnASingleLine: false
+# AllowShortLoopsOnASingleLine: false
+AlwaysBreakAfterReturnType: All
+IndentCaseLabels: false
+IndentWidth:     4
+DerivePointerAlignment: false
+PointerAlignment: Right
+ReflowComments:  false

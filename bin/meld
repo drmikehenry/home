@@ -1,0 +1,9 @@
+#!/bin/bash
+
+regex='^$'
+regex="$regex"'|G_IS_OBJECT \(object\)'
+regex="$regex"'|FIXME: Oxygen::WidgetSizeData:'
+regex="$regex"'|Gtk-WARNING'
+regex="$regex"'|gtk_widget_get_scale_factor'
+
+/usr/bin/meld "$@" 2>&1 | grep -E --line-buffered -v "$regex"

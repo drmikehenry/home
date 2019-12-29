@@ -1,0 +1,16 @@
+#!/bin/sh
+
+if [ -z "$1" ]; then
+    echo "Usage: $0 FILES_TO_FIX"
+    exit
+fi
+# - CamelCaseStuff to Camel-case-stuff.
+# - Downcase.
+# - Replace underscores and spaces with hyphens.
+# - Fix runs of hyphens.
+ren '
+    s/([a-z0-9])([A-Z])/$1-\l$2/g;
+    s/(.*)/lc()/e;
+    s/[ _]/-/g;
+    s/-+/-/g;
+    ' "$@"

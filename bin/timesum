@@ -1,0 +1,30 @@
+#!/usr/bin/env python3
+
+import sys
+import re
+
+
+def main():
+    sum = 0.0
+    for line in sys.stdin:
+        line = line.strip()
+        m = re.match(
+            r"""
+            (?P<time>[0-9.]+)
+            (?P<units>[hd])
+            """,
+            line,
+            re.VERBOSE,
+        )
+        if m:
+            time = float(m.group("time"))
+            if m.group("units") == "h":
+                time = time / 8.0
+            sum += time
+        print(line)
+
+    print("%.2fd total" % sum)
+
+
+if __name__ == "__main__":
+    main()

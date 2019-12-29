@@ -1,0 +1,46 @@
+#!/usr/bin/env python3
+
+import argparse
+
+__version__ = "0.1.0"
+
+usage = """
+usage: %prog [options] [FILE]+
+""".strip()
+
+description = """\
+Expands tab characters in files in-place.
+"""
+
+
+def detab(name, tab_size=8):
+    with open(name) as in_file:
+        lines = [line.expandtabs(tab_size) for line in in_file]
+    with open(name, "w") as out_file:
+        out_file.write("".join(lines))
+
+
+def main():
+    parser = argparse.ArgumentParser(description=description)
+    parser.add_argument("--version", action="version", version=__version__)
+    parser.add_argument(
+        "-t",
+        "--tab-size",
+        type=int,
+        dest="tab_size",
+        default=4,
+        metavar="TABSIZE",
+        help="set TABSIZE (default 4)",
+    )
+    parser.add_argument(
+        "files", nargs="+", metavar="FILE", help="files to detab"
+    )
+
+    args = parser.parse_args()
+
+    for arg in args.files:
+        detab(arg, tab_size=args.tab_size)
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,8 @@
+xterm*background: black
+xterm*foreground: lightgray
+
+Urxvt*background: black
+Urxvt*foreground: lightgray
+
+Rxvt*background: black
+Rxvt*foreground: lightgray

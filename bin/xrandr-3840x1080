@@ -1,0 +1,6 @@
+#!/bin/bash
+
+xrandr --newmode 3840x1080 358.68 3840 3872 5232 5264 1080 1102 1113 1135 -hsync +vsync
+xrandr --addmode Virtual1 3840x1080
+xrandr --output Virtual1 --mode 3840x1080
+xrandr --output Virtual1 --mode 3840x1080

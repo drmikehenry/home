@@ -1,0 +1,5 @@
+# Change default ctrl-A to ctrl-J for escape key.
+escape ^Jj
+
+# Kill unnecessary license message.
+startup_message off

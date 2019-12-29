@@ -1,0 +1,2 @@
+stdxf = + .sconsign.dblite *.dll *.lib *.suo *.pyd
+stdxd = + target .pytest_cache dist
