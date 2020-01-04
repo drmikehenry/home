@@ -3,6 +3,7 @@
 /.bash_history
 /.cache/
 /.cargo/
+/.cisco/
 /.config/
 /.cookiecutter_replay/
 /.cookiecutters/
@@ -38,6 +39,7 @@
 /.local/
 /.localvimrc_persistent
 /.macromedia/
+/.minttyrc
 /.mozilla/
 /.mplayer/
 /.multirust
@@ -77,7 +79,30 @@
 /.xorgxrdp.*
 /.xsel.log
 /.xsession-errors
+/3D Objects/
+/AppData/
+/Application Data/
+/Citrix/
 /Desktop
+/Documents/My Music/
+/Documents/My Pictures/
+/Documents/My Videos/
+/Local Settings/
+/MicrosoftEdgeBackups/
+/My Documents/
+/NTUSER.DAT*
+/NetHood/
+/PrintHood/
+/Recent/
+/SendTo/
+/Start Menu/
+/Templates/
+/_curlrc
+/_viminfo
+/_vimlocal/
+/_vimrc
+/_vimuserlocal/.netrwhist
+/_vimuserlocal/spell/
 /build
 /download
 /envs
@@ -85,11 +110,13 @@
 /h
 /konsole.txt
 /logs
+/ntuser.*
 /projects
 /reviews
 /rpmbuild
 /tmp
 /vim
+/vimfiles
 /vms
 /vmware
 /x
