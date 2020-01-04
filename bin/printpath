@@ -5,4 +5,13 @@ if [ $# = 1 ]; then
 else
     p="$PATH"
 fi
-echo "$p" | perl -pe 's/:/\n/g'
+
+while true; do
+    prefix="${p%%:*}"
+    printf '%s\n' "$prefix"
+    if [ "$prefix" = "$p" ]; then
+        break
+    fi
+    suffix="${p#*:}"
+    p=$suffix
+done
