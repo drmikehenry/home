@@ -4,9 +4,9 @@ bundle_file=${1:-}
 
 if [ -z "$bundle_file" ]; then
     cat <<EOF
-Usage: gitbundlepull path/to/some.bundle
+Usage: gitbundlefetch path/to/some.bundle
 EOF
     exit 1
 fi
 
-git pull "$bundle_file" 'refs/*:refs/*'
+git fetch --force "$bundle_file" '*:*'
