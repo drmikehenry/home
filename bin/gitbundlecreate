@@ -13,9 +13,9 @@ rm -f "$bundle_file"
 bundle_branch="sent/$(date '+%Y%m%d_%H%M%S')"
 git branch -q "$bundle_branch" master
 if git show-ref sent/last > /dev/null; then
-    git bundle create "$bundle_file" sent/last..master "$bundle_branch" --tags
+    git bundle create "$bundle_file" sent/last..master "$bundle_branch" --all
 else
-    git bundle create "$bundle_file" master "$bundle_branch" --tags --branches
+    git bundle create "$bundle_file" master "$bundle_branch" --all
 fi
 if [ $? = 0 ]; then
     echo
