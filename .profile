@@ -22,9 +22,6 @@ if [ -d "$HOME/go" ]; then
     pathprepend "$GOPATH/bin"
 fi
 
-# Ruby support.
-pathprepend "$HOME/.rvm/bin"
-
 # Rust support.
 pathprepend "$HOME/.cargo/bin"
 
@@ -36,13 +33,6 @@ if [ -x "$VIRTUALENVWRAPPER_PYTHON" ]; then
     export VIRTUALENVWRAPPER_PYTHON
 else
     unset VIRTUALENVWRAPPER_PYTHON
-fi
-
-# pyenv support.
-if [ -d "$HOME/.pyenv" ]; then
-    export PYENV_ROOT="$HOME/.pyenv"
-    pathprepend "$PYENV_ROOT/bin"
-    eval "$(pyenv init -)"
 fi
 
 # Per-host PATH.

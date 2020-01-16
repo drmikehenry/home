@@ -241,14 +241,6 @@ alias homegit='GIT_DIR=~/.home.git GIT_WORK_TREE=~  git'
 alias home2git='GIT_DIR=~/.home2.git GIT_WORK_TREE=~  git'
 
 ##############################################################################
-# Ruby support
-
-# Load RVM into a shell session *as a function* for interactive shells.
-if [ -s "$HOME/.rvm/scripts/rvm" ]; then
-    . "$HOME/.rvm/scripts/rvm"
-fi
-
-##############################################################################
 # Python support
 
 if [ -n "$(command -v virtualenvwrapper.sh)" ]; then
