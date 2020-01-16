@@ -1,7 +1,3 @@
-if [ "$PROFILE_SOURCED" = "YES" ]; then
-    return
-fi
-
 export PROFILE_SOURCED=YES
 
 . "$HOME/.common.sh"
