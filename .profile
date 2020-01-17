@@ -8,6 +8,10 @@ umask 002
 pathappend "$HOME/x/bin"
 
 # Prepend to PATH (so that local binaries win).
+
+# On CentOS, root lacks /usr/local/bin for "security" reasons.
+pathprepend '/usr/local/bin'
+
 pathprepend "$HOME/bin"
 pathprepend "$HOME/bin2"
 pathprepend "$HOME/.local/bin"
