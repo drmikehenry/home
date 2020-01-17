@@ -114,9 +114,11 @@
 /projects
 /reviews
 /rpmbuild
+/src/
 /tmp
 /vim
 /vimfiles
 /vms
 /vmware
 /x
+/x-tools/
