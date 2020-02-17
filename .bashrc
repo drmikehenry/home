@@ -129,7 +129,7 @@ alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias kdiff='kdiff3'
 alias svn='svnwrap'
-alias sdist='python setup.py -q sdist'
+alias sdist='python setup.py -q sdist bdist_wheel'
 
 # dnf-specific aliases.
 # sudo is used for all of them so that caching always happens for root.
