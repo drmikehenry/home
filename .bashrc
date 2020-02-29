@@ -156,6 +156,9 @@ alias acs='apt-cache search'
 alias acshow='apt-cache show'
 alias dpkg-stat='dpkg -s'
 
+alias ipy='ipython'
+alias py='python'
+
 dush()
 {
     if [ -z "$1" ]; then
