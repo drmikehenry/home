@@ -238,6 +238,8 @@ h()
     fi
 }
 
+alias docker='sudo docker'
+
 ##############################################################################
 # Support for $HOME in Git.
 alias homegit='GIT_DIR=~/.home.git GIT_WORK_TREE=~  git'
