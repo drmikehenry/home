@@ -4,25 +4,23 @@ bundle_file=${1:-}
 
 if [ -z "$bundle_file" ]; then
     cat <<EOF
-Usage: gitbundlecreate path/to/some.bundle
+Usage: gitbundlecreate path/to/some.bundle [extra-git-args]
 EOF
     exit 1
 fi
 
 rm -f "$bundle_file"
-bundle_branch="sent/$(date '+%Y%m%d_%H%M%S')"
-git branch -q "$bundle_branch" master
 if git show-ref sent/last > /dev/null; then
-    git bundle create "$bundle_file" sent/last..master "$bundle_branch" --all
+    git bundle create "$@" sent/last..master &&
+        git branch --force sent/start sent/last
 else
-    git bundle create "$bundle_file" master "$bundle_branch" --all
+    git bundle create "$@" master
 fi
 if [ $? = 0 ]; then
     echo
-    echo "Bundle branch $bundle_branch"
+    echo "Created $bundle_file"
     git branch --force sent/last master
 else
     echo
-    echo 'Skipping bundle operation.'
-    git branch -D "$bundle_branch" > /dev/null
+    echo 'No bundle file created.'
 fi
