@@ -159,6 +159,8 @@ alias dpkg-stat='dpkg -s'
 alias ipy='ipython'
 alias py='python'
 
+alias df='df -h -x tmpfs -x squashfs -x devtmpfs'
+
 dush()
 {
     if [ -z "$1" ]; then
