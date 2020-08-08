@@ -176,6 +176,16 @@ isatty()
     tty -s 0<&1
 }
 
+ipwrap()
+{
+    if isatty; then
+        command ip -br -c "$@"
+    else
+        command ip "$@"
+    fi
+}
+alias ip=ipwrap
+
 diffwrap()
 {
     colordiff=$(type -P colordiff)
