@@ -41,7 +41,7 @@
 	unadd = reset HEAD --
 	unstage = reset HEAD --
 	uncommit = reset --soft HEAD^
-	amend = commit -a --amend
+	amend = commit --amend
 	last = log -1 HEAD
 	ls = ls-files
 
