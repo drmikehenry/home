@@ -1,7 +1,59 @@
-BasedOnStyle: Google
+# Comment out to left-align backslash-newline in macro definitions:
+AlignEscapedNewlines: DontAlign
 
+# Comment out to pack arguments/parameters tightly (as many as will fit
+# on each line), e.g.:
+#   some_function(aaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbbbb,
+#       cccccccccccccccccccc, ddddddddddddd)
+# Otherwise, args will be all on one line, or each on a separate line.
 BinPackArguments: false
 BinPackParameters: false
+
+# Comment out to indent 'case xxx:' one level relative to 'switch', e.g.:
+# switch (value) {
+#     case xxx:
+#         break;
+IndentCaseLabels: false
+
+# Comment out to keep function return type and name on the same line:
+AlwaysBreakAfterReturnType: All
+
+# Comment out to allow each type of code to be on a single line:
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+
+##############################################################################
+# Below this line are settings less likely to change.
+
+# Comment out to align operands in wrapped lines, e.g.:
+#   int aaa = bbbbbbbbbbbb +
+#             cccccccccccc;
+AlignOperands:   false
+
+# Comment out to allow aligning after open paren, e.g.:
+#   some_function(argument,
+#                 argument,
+#                 argument)
+AlignAfterOpenBracket: AlwaysBreak
+
+# Comment out to allow clang-format to guess the prevailing pointer style:
+#   int *p
+# vs.
+#   int* p
+DerivePointerAlignment: false
+PointerAlignment: Right
+
+# Comment out to allow sorting of #include files:
+SortIncludes:  false
+
+# Comment out to allow reformatting of line breaks in comments:
+ReflowComments:  false
+
+# Google defaults to 2-character indentation.
+IndentWidth:     4
+
+# Put each opening brace on its own line:
 BreakBeforeBraces: Custom
 BraceWrapping:
   AfterClass:      true
@@ -15,21 +67,8 @@ BraceWrapping:
   AfterExternBlock: false
   BeforeCatch:     true
   BeforeElse:      true
-  # IndentBraces:    false
   SplitEmptyFunction: true
   SplitEmptyRecord: true
   SplitEmptyNamespace: true
 
-AlignAfterOpenBracket: AlwaysBreak
-# AlignEscapedNewlines: Left
-AlignEscapedNewlines: DontAlign
-AlignOperands:   false
-AllowShortFunctionsOnASingleLine: None
-# AllowShortIfStatementsOnASingleLine: false
-# AllowShortLoopsOnASingleLine: false
-AlwaysBreakAfterReturnType: All
-IndentCaseLabels: false
-IndentWidth:     4
-DerivePointerAlignment: false
-PointerAlignment: Right
-ReflowComments:  false
+BasedOnStyle: Google
