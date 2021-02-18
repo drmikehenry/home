@@ -1,5 +1,8 @@
 xterm*background: black
 xterm*foreground: lightgray
+xterm*renderFont: true
+xterm*faceName: Hack
+xterm*faceSize: 10
 
 Urxvt*background: black
 Urxvt*foreground: lightgray
