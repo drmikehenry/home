@@ -176,6 +176,13 @@ isatty()
     tty -s 0<&1
 }
 
+# E.g., make ``ls`` think it's running in a tty:
+#   faketty ls | cat
+faketty()
+{
+    script -qfc "$(printf '%q ' "$@")" /dev/null
+}
+
 ipwrap()
 {
     if isatty; then
