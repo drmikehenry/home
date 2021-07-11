@@ -28,7 +28,9 @@ def main() -> None:
     total = 0.0
     for line in fileinput.input():
         total += get_num(line)
-    total_str = str(total).rstrip(".0")
+    total_str = str(total)
+    if total_str.endswith(".0"):
+        total_str = total_str[:-2]
     print(total_str)
 
 
