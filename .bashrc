@@ -343,7 +343,7 @@ bind '"\C-o\C-o": "\C-e |& less\n"'
 bind '"\C-o\C-l": "\C-a\edless\n"'
 bind '"\C-o\C-f": "for i in *; do echo \"$''i\"; done"'
 bind '"\C-o\C-i": "if [ -e \"$''i\" ]; then echo \"$''i\"; fi"'
-bind '"\C-o\C-w": "while read i; do echo \"$''i\"; done"'
+bind '"\C-o\C-w": "while IFS= read -r i; do echo \"$''i\"; done"'
 bind '"\C-o\C-r": "cd; root\n"'
 bind '"\C-o\C-u": "cd ..\n"'
 
