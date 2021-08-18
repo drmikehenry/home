@@ -4,6 +4,7 @@
 /.cache/
 /.cargo/
 /.cisco/
+/.clangd/
 /.config/
 /.cookiecutter_replay/
 /.cookiecutters/
