@@ -1,0 +1,4 @@
+# "bracketed paste" mode causes issues pasting into Bash and other
+# readline-based command-line consumers:
+# https://utcc.utoronto.ca/~cks/space/blog/unix/BashBracketedPasteChange?showcomments
+set enable-bracketed-paste off
