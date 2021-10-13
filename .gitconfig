@@ -44,6 +44,8 @@
 	amend = commit --amend
 	last = log -1 HEAD
 	ls = ls-files
+	meld = difftool -d --tool=meld
+	rv = remote -v
 
 [color "branch"]
 	upstream = blue bold
