@@ -32,6 +32,9 @@
 	### root who does not have access to NFS-mounted /home/).
 	###excludesfile = /home/mrhenr1/.gitglobalignore
 
+	# Avoid automatic line ending conversions.
+	autocrlf = false
+
 [merge]
 	tool = meld
 
