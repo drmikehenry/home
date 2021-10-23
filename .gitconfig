@@ -84,3 +84,8 @@
 
 [init]
 	defaultBranch = main
+
+[http]
+	# Blank out any pre-configured sslbackend setting.
+	# ``schannel`` (default on Windows) doesn't work properly.
+	sslbackend
