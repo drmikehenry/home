@@ -289,52 +289,9 @@ fi
 # Set readline variables:
 #   bind 'set variable value'
 
-# Readline variables.
+# See ~/.inputrc for generic Readline settings: only Bash-specific
+# settings belong below.
 
-# These two settings eliminate the need to press <Tab>
-# twice when completing a symlink to a directory:
-bind 'set mark-directories On'
-bind 'set mark-symlinked-directories On'
-
-# Experimental: If completions are longer than this, use '...' as prefix.
-bind 'set completion-prefix-display-length 4'
-
-# Readline key bindings.
-
-## Use vi-compatible editing.
-#set -o vi
-## In insert-mode, bring over many Emacs bindings.
-#bind -m vi-insert '"\eb": backward-word'
-#bind -m vi-insert '"\e\C-?": backward-kill-word'
-#bind -m vi-insert '"\C-a": beginning-of-line'
-#bind -m vi-insert '"\C-l": clear-screen'
-#bind -m vi-insert '"\C-d": delete-char'
-#bind -m vi-insert '"\C-x\C-e": edit-and-execute-command'
-#bind -m vi-insert '"\C-e": end-of-line'
-#bind -m vi-insert '"\C-s": forward-search-history'
-#bind -m vi-insert '"\ef": forward-word'
-#bind -m vi-insert '"\C-p": history-search-backward'
-#bind -m vi-insert '"\C-n": history-search-forward'
-#bind -m vi-insert '"\e.": yank-last-arg'
-#bind -m vi-insert '"\C-k": kill-line'
-#bind -m vi-insert '"\ed": kill-word'
-#bind -m vi-insert '"\C-r": reverse-search-history'
-#bind -m vi-insert '"\C-t": transpose-chars'
-#bind -m vi-insert '"\et": transpose-words'
-#bind -m vi-insert '"\C-u": unix-line-discard'
-#bind -m vi-insert '"\C-w": unix-word-rubout'
-#bind -m vi-insert '"\C-y": yank'
-
-
-# CTRL-P/CTRL-N normally bind to previous-history/next-history.  These
-# improved bindings are identical when the command line is empty, but
-# when characters exist between the start of the current line and the
-# "point" (i.e., cursor location), only results starting with that prefix
-# will be returned.
-bind -m emacs '"\C-p": history-search-backward'
-bind -m emacs '"\C-n": history-search-forward'
-
-# Macro key bindings.
 # "Leader" key options:
 #   Control-o
 #   Control-g
@@ -355,6 +312,9 @@ bind '"\eu": "cd ..\n"'
 
 # Alt-s: "svn st" or "git st"
 bind '"\es": "st\n"'
+
+# End Readline key bindings and settings.
+##############################################################################
 
 if [ -f "$HOME/.bashrc2" ]; then
     . "$HOME/.bashrc2"

@@ -2,3 +2,93 @@
 # readline-based command-line consumers:
 # https://utcc.utoronto.ca/~cks/space/blog/unix/BashBracketedPasteChange?showcomments
 set enable-bracketed-paste off
+
+# **This is bad**: it impacts the delay between keys in *all* sequences
+# (like \C-o\C-o), not just on multi-byte single-key sequences.
+# Shorten delay (milliseconds) from pressing Escape to recognizing that it
+# doesn't start a longer key sequence:
+#   set keyseq-timeout 50
+
+# Display the editing mode in the prompt (except for "emacs" mode):
+set show-mode-in-prompt on
+set emacs-mode-string ""
+
+# These two settings eliminate the need to press <Tab>
+# twice when completing a symlink to a directory:
+set mark-directories On
+set mark-symlinked-directories On
+
+# If completions are longer than this, use '...' as prefix.
+set completion-prefix-display-length 4
+
+# Configure emacs-mode keys:
+set keymap emacs
+
+# M-1 is consumed by Plasma, so we won't miss that mapping here.
+# Use M-1 as an implementation detail for extension, of the form:
+#   \e1<unique-name>
+"\e1<vi-editing-mode>": vi-editing-mode
+
+# Match vi-mode's M-v shortcut for C-x C-e:
+"\ev": edit-and-execute-command
+
+# M-e -> switch to vi-movement-mode.
+# After switching to vi-editing-mode, the subsequent Escape (\C-[) does
+# switch to vi-movement-mode, but the prompt doesn't change; therefore,
+# issue "c\C-[" to start and then abort an edit to force a prompt update:
+"\ee": "\e1<vi-editing-mode>\C-[c\C-["
+
+# Escape -> switch to vi-movement-mode.
+"\C-[": "\ee"
+
+# In all vi modes, M-e returns to emacs mode (as does pressing Enter).
+set keymap vi
+"\ee": emacs-editing-mode
+"\C-j": "\ee\C-j"
+"\C-m": "\ee\C-m"
+set keymap vi-insert
+"\ee": emacs-editing-mode
+"\C-j": "\ee\C-j"
+"\C-m": "\ee\C-m"
+
+# In vi-insert mode, bring over many Emacs bindings:
+set keymap vi-insert
+"\e\C-?": backward-kill-word
+"\eb": backward-word
+"\ef": forward-word
+"\C-a": beginning-of-line
+"\C-e": end-of-line
+"\C-l": clear-screen
+"\C-d": delete-char
+"\C-x\C-e": edit-and-execute-command
+"\C-s": forward-search-history
+"\C-p": history-search-backward
+"\C-n": history-search-forward
+"\e.": yank-last-arg
+"\C-k": kill-line
+"\ed": kill-word
+"\C-r": reverse-search-history
+"\C-t": transpose-chars
+"\et": transpose-words
+"\C-u": unix-line-discard
+"\C-w": unix-word-rubout
+"\C-y": yank
+
+# CTRL-P/CTRL-N normally bind to previous-history/next-history.  These
+# improved bindings are identical when the command line is empty, but
+# when characters exist between the start of the current line and the
+# "point" (i.e., cursor location), only results starting with that prefix
+# will be returned.
+# Ensure this works in all modes:
+set keymap emacs
+"\C-p": history-search-backward
+"\C-n": history-search-forward
+set keymap vi
+"\C-p": history-search-backward
+"\C-n": history-search-forward
+set keymap vi-insert
+"\C-p": history-search-backward
+"\C-n": history-search-forward
+
+# Use emacs keymap by default:
+set keymap emacs
