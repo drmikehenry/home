@@ -1,0 +1,115 @@
+#!/usr/bin/env python3
+
+
+import argparse
+import hashlib
+import sys
+
+__version__ = "0.1.1"
+
+
+def printable_line(line, config):
+    expect_cr = config.line_endings == "dos"
+    if line.endswith("\n"):
+        line = line[:-1]
+        lf = "\n"
+    else:
+        lf = "«no LF»\n"
+    if line.endswith("\r"):
+        line = line[:-1]
+        cr = "" if expect_cr else "«CR»"
+    else:
+        cr = "«no CR»" if expect_cr else ""
+    trimmed_line = line.rstrip(" ")
+    out_chars = []
+    for i, c in enumerate(trimmed_line):
+        if c == "\r":
+            out_chars.append("␍")
+        elif c == "\t":
+            tab_size = config.tab_size
+            width = tab_size - (i % tab_size)
+            if width > 1:
+                out_chars.append("├")
+                out_chars.append("─" * (width - 2))
+                out_chars.append("┤")
+            else:
+                out_chars.append("↦")
+        else:
+            out_chars.append(c)
+    final_spaces = len(line) - len(trimmed_line)
+    out = "".join(out_chars) + ("•" * final_spaces) + cr + lf
+    return out
+
+
+def process_file(f, config):
+    h = hashlib.sha256()
+    for line_num, raw_line in enumerate(f, 1):
+        h.update(raw_line)
+        line = raw_line.decode("utf-8")
+        out = printable_line(line, config)
+        d = h.hexdigest()[:10]
+        if config.line_numbers:
+            line_num_str = "{:3} ".format(line_num)
+        else:
+            line_num_str = ""
+        sys.stdout.write("{} {}{}".format(d, line_num_str, out))
+
+
+def main():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        "--version", action="version", version="%(prog)s " + __version__
+    )
+
+    parser.add_argument(
+        "files",
+        metavar="FILE",
+        action="store",
+        nargs="+",
+        help="files to process (use `-` for stdin)",
+    )
+
+    parser.add_argument(
+        "-l",
+        "--line-numbers",
+        action="store_true",
+        default=False,
+        help="""use line numbers""",
+    )
+
+    parser.add_argument(
+        "--line-endings",
+        action="store",
+        default="unix",
+        choices=["unix", "dos"],
+        help="""expected type of line endings (default: %(default)s)""",
+    )
+
+    parser.add_argument(
+        "--tab-size",
+        type=int,
+        action="store",
+        default=8,
+        help="""size of tab (default: %(default)s)""",
+    )
+
+    config = parser.parse_args()
+    if config.tab_size < 1:
+        parser.error("--tab-size must be at least one")
+
+    def print_name(name):
+        print("---------- «{}» ----------".format(name))
+
+    for name in config.files:
+        if name == "-":
+            print_name("<stdin>")
+            process_file(sys.stdin.buffer, config)
+        else:
+            print_name(name)
+            with open(name, "rb") as f:
+                process_file(f, config)
+
+
+if __name__ == "__main__":
+    main()
