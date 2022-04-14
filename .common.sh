@@ -40,6 +40,7 @@ pyenvactivate() {
         export PYENV_ROOT="$HOME/.pyenv"
         if ! pathcontains "$PYENV_ROOT/bin"; then
             pathprepend "$PYENV_ROOT/bin"
+            eval "$(pyenv init --path)"
             eval "$(pyenv init -)"
         fi
     else
@@ -47,4 +48,3 @@ pyenvactivate() {
         return 1
     fi
 }
-
