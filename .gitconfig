@@ -37,6 +37,7 @@
 
 [merge]
 	tool = meld
+	conflictstyle = diff3
 
 [alias]
 	br = branch
