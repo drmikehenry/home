@@ -313,6 +313,38 @@ bind '"\eu": "cd ..\n"'
 # Alt-s: "svn st" or "git st"
 bind '"\es": "st\n"'
 
+bracketed-paste()
+{
+    case "$1" in
+        1|on|enable)
+            echo "Enabling bracketed paste"
+            bind 'set enable-bracketed-paste on'
+            ;;
+
+        0|off|disable)
+            echo "Disabling bracketed paste"
+            bind 'set enable-bracketed-paste off'
+            ;;
+
+        *)
+            cat <<EOF
+Enable or disable "bracketed paste" mode in terminal:
+
+    bracketed-paste [enable|on|1]           # Enable
+    bracketed-paste [disable|off|0]         # Disable
+
+Can default to "disable" for readline()-based apps
+by creating ~/.inputrc with contents::
+
+    set enable-bracketed-paste off
+
+EOF
+            echo "Current state:"
+            bind -v | grep '.*enable-bracketed-paste.*'
+            ;;
+        esac
+}
+
 # End Readline key bindings and settings.
 ##############################################################################
 
