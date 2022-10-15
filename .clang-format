@@ -1,4 +1,7 @@
+BasedOnStyle: Google
+
 # Comment out to left-align backslash-newline in macro definitions:
+# Google default: Left
 AlignEscapedNewlines: DontAlign
 
 # Comment out to pack arguments/parameters tightly (as many as will fit
@@ -6,21 +9,28 @@ AlignEscapedNewlines: DontAlign
 #   some_function(aaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbbbb,
 #       cccccccccccccccccccc, ddddddddddddd)
 # Otherwise, args will be all on one line, or each on a separate line.
+# Google default: true
 BinPackArguments: false
+# Google default: true
 BinPackParameters: false
 
 # Comment out to indent 'case xxx:' one level relative to 'switch', e.g.:
 # switch (value) {
 #     case xxx:
 #         break;
+# Google default: true
 IndentCaseLabels: false
 
 # Comment out to keep function return type and name on the same line:
+# Google default: None
 AlwaysBreakAfterReturnType: All
 
 # Comment out to allow each type of code to be on a single line:
+# Google default: All
 AllowShortFunctionsOnASingleLine: None
+# Google default: WithoutElse
 AllowShortIfStatementsOnASingleLine: false
+# Google default: true
 AllowShortLoopsOnASingleLine: false
 
 ##############################################################################
@@ -29,33 +39,45 @@ AllowShortLoopsOnASingleLine: false
 # Comment out to align operands in wrapped lines, e.g.:
 #   int aaa = bbbbbbbbbbbb +
 #             cccccccccccc;
+# Google default: Align
 AlignOperands:   false
 
 # Comment out to allow aligning after open paren, e.g.:
 #   some_function(argument,
 #                 argument,
 #                 argument)
+# Google default: Align
 AlignAfterOpenBracket: AlwaysBreak
 
 # Comment out to allow clang-format to guess the prevailing pointer style:
 #   int *p
 # vs.
 #   int* p
+# Google default: true
 DerivePointerAlignment: false
+# Choose `Left` or `Right` for alignment of pointer asterisks:
+# Google default: Left
 PointerAlignment: Right
 
 # Comment out to allow sorting of #include files:
+# Google default: true
 SortIncludes:  false
 
 # Comment out to allow reformatting of line breaks in comments:
+# Google default: true
 ReflowComments:  false
 
-# Google defaults to 2-character indentation.
+# Number of spaces for indentation:
+# Google default: 2
 IndentWidth:     4
 
 # Put each opening brace on its own line:
+# Google default: Attach
 BreakBeforeBraces: Custom
 BraceWrapping:
+  # Google default for AfterControlStatement: Never
+  # Google default for AfterXxx: false
+  # Google default for SplitEmptyXxx: true
   AfterClass:      true
   AfterControlStatement: true
   AfterEnum:       true
@@ -71,4 +93,16 @@ BraceWrapping:
   SplitEmptyRecord: true
   SplitEmptyNamespace: true
 
-BasedOnStyle: Google
+# How to indent pre-processor directives:
+#   None, AfterHash, BeforeHash
+# Google default: None
+# IndentPPDirectives: None
+
+# Google default: false
+# SpaceAfterCStyleCast: false
+
+# `true/false` in clang-format-10; 12 has these:
+#   None, Consecutive, AcrossEmptyLines, AcrossComments,
+#   AcrossEmptyLinesAndComments
+# Google default: None
+# AlignConsecutiveMacros: None
