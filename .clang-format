@@ -105,4 +105,4 @@ BraceWrapping:
 #   None, Consecutive, AcrossEmptyLines, AcrossComments,
 #   AcrossEmptyLinesAndComments
 # Google default: None
-# AlignConsecutiveMacros: None
+AlignConsecutiveMacros: true
