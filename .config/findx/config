@@ -1,2 +1,2 @@
 stdxf = + .sconsign.dblite *.dll *.lib *.suo *.pyd
-stdxd = + target .pytest_cache dist builddir bindir .cache
+stdxd = + target .pytest_cache dist builddir bindir .cache venv
