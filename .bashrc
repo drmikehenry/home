@@ -280,6 +280,13 @@ if ! shopt -oq posix; then
 fi
 
 ##############################################################################
+# Starship support
+
+if [ -n "$(command -v starship)" ]; then
+    eval "$(starship init bash)"
+fi
+
+##############################################################################
 # Readline key bindings and settings.
 # Syntax: "\e" means escape.  Bash sends Alt-x as Escape-x ==> "\ex".
 # Bind keys to a macro value:
