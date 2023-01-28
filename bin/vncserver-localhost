@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Prevent `starship` from detecting an SSH connection spuriously.  Though
+# we may be connected via SSH when launching `vncserver`, we'll be connecting
+# later via `vncviewer` and expect to have the fiction of a local session.
+unset SSH_CONNECTION
+unset SSH_CLIENT
+unset SSH_TTY
+
+vncserver -localhost yes
