@@ -3,8 +3,18 @@
 import sys
 import shutil
 
-with open(sys.argv[1], "rb") as f:
+
+def stripheaders(f):
     for line in f:
         if not line.rstrip(b"\n"):
             break
     shutil.copyfileobj(f, sys.stdout.buffer)
+
+
+args = sys.argv[1:]
+if args:
+    for name in args:
+        with open(name, "rb") as f:
+            stripheaders(f)
+else:
+    stripheaders(sys.stdin.buffer)

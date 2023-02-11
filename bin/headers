@@ -2,8 +2,17 @@
 
 import sys
 
-with open(sys.argv[1], "rb") as f:
+
+def headers(f):
     for line in f:
         if not line.rstrip(b"\n"):
             break
         sys.stdout.buffer.write(line)
+
+args = sys.argv[1:]
+if args:
+    for name in args:
+        with open(name, "rb") as f:
+            headers(f)
+else:
+    headers(sys.stdin.buffer)
