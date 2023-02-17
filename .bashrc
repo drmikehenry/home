@@ -186,12 +186,13 @@ faketty()
 ipwrap()
 {
     if isatty; then
-        command ip -br -c "$@"
+        command ip -c "$@"
     else
         command ip "$@"
     fi
 }
 alias ip=ipwrap
+alias ipa='ip a'
 
 diffwrap()
 {
