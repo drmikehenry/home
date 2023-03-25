@@ -1,0 +1,6 @@
+---
+If:
+  PathMatch: .*\.h
+
+CompileFlags:
+  Add: [-Wno-unused-functions]
