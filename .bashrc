@@ -192,7 +192,7 @@ ipwrap()
     fi
 }
 alias ip=ipwrap
-alias ipa='ip a'
+alias ipa='ip -br a'
 
 diffwrap()
 {
@@ -284,7 +284,8 @@ fi
 # Starship support
 
 if [ -n "$(command -v starship)" ]; then
-    eval "$(starship init bash)"
+    true
+    # eval "$(starship init bash)"
 fi
 
 ##############################################################################
