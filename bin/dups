@@ -13,14 +13,22 @@ empty_file_hash = "d41d8cd98f00b204e9800998ecf8427e"
 
 
 def main():
+    hash_len = len(empty_file_hash)
     d = defaultdict(list)
-    for line in sys.stdin:
-        hash, path = line.strip().split(None, 1)
-        d[hash].append(path)
+    for bline in sys.stdin.buffer:
+        bline = bline.rstrip(b"\n")
+        bhash = bline[:hash_len]
+        bpath = bline[hash_len + 2 :]
+        hash = bhash.decode()
+        d[hash].append(bpath)
     dups = {k: v for k, v in d.items() if k != empty_file_hash and len(v) > 1}
-    for (hash, file_paths) in sorted(dups.items(), key=lambda e: e[1][0]):
+    for (hash, file_bpaths) in sorted(dups.items(), key=lambda e: e[1][0]):
         print(hash)
-        for p in file_paths:
+        for bpath in file_bpaths:
+            try:
+                p = bpath.decode()
+            except UnicodeDecodeError:
+                p = str(bpath)
             print("  %s" % p)
 
 
