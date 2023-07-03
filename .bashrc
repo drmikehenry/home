@@ -90,6 +90,8 @@ tzip()
 alias xzip='unzip -q'
 alias xtzip='xzip'
 
+alias rg='rg --sort=path'
+
 # Work around incorrect detection of stdin == tty on Windows using Git-Bash.
 ptwrap()
 {
