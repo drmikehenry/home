@@ -1,4 +1,31 @@
-#!/bin/sh
+#!/bin/bash
 
-gvim --servername GVIM0 --name GVIM0 --remote-silent "${@%%:*}"
-wmctrl -xa "GVIM0.Gvim"
+instance='0'
+
+if [ "$1" == '-2' ]; then
+    instance=')'
+    shift
+fi
+
+rundir="${XDG_RUNTIME_DIR:-/tmp/user-$(id -u)}"
+
+# Pairs with:
+#   activate "nvim-qt --name NVIM0 -- --listen NVIM0" "NVIM0.nvim-qt"
+#   activate "nvim-qt --name NVIM) -- --listen NVIM)" "NVIM).nvim-qt"
+nvim_instance="NVIM$instance"
+nvim_server="$rundir/$nvim_instance"
+
+# Pairs with:
+#   activate "gvim --servername GVIM0 --name GVIM0" "GVIM0.Gvim"
+#   activate "gvim --servername GVIM) --name GVIM)" "GVIM).Gvim"
+gvim_instance="GVIM$instance"
+gvim_server="$gvim_instance"
+
+if [ -e "$nvim_server" ]; then
+    nvim-qt -- --server "$nvim_server" --remote-silent "${@%%:*}" 2>&1 |
+        grep -v 'QSocketNotifier: Invalid socket'
+    wmctrl -xa "$nvim_instance.nvim-qt"
+else
+    gvim --servername "$gvim_server" --name "$gvim_instance" --remote-silent "${@%%:*}"
+    wmctrl -xa "$gvim_instance.Gvim"
+fi

@@ -1,4 +1,3 @@
-#!/bin/sh
+#!/bin/bash
 
-gvim --servername 'GVIM)' --name 'GVIM)' --remote-silent "${@%%:*}"
-wmctrl -xa "GVIM).Gvim"
+gr -2 "$@"
