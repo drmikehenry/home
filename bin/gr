@@ -10,8 +10,8 @@ fi
 rundir="${XDG_RUNTIME_DIR:-/tmp/user-$(id -u)}"
 
 # Pairs with:
-#   activate "nvim-qt --name NVIM0 -- --listen NVIM0" "NVIM0.nvim-qt"
-#   activate "nvim-qt --name NVIM) -- --listen NVIM)" "NVIM).nvim-qt"
+#   activate "nvim-qt --name NVIM0 -- --listen $rundir/NVIM0" "NVIM0.nvim-qt"
+#   activate "nvim-qt --name NVIM) -- --listen $rundir/NVIM)" "NVIM).nvim-qt"
 nvim_instance="NVIM$instance"
 nvim_server="$rundir/$nvim_instance"
 
@@ -21,11 +21,17 @@ nvim_server="$rundir/$nvim_instance"
 gvim_instance="GVIM$instance"
 gvim_server="$gvim_instance"
 
+files=()
+for f in "$@"; do
+    # Remove `:*` from the end of each filename and make absolute paths.
+    files+=("$(readlink -f "${f%%:*}")")
+done
+
+    echo "nvim_server=$nvim_server"
 if [ -e "$nvim_server" ]; then
-    nvim-qt -- --server "$nvim_server" --remote-silent "${@%%:*}" 2>&1 |
-        grep -v 'QSocketNotifier: Invalid socket'
+    nvim --server "$nvim_server" --remote-silent "${files[@]}"
     wmctrl -xa "$nvim_instance.nvim-qt"
 else
-    gvim --servername "$gvim_server" --name "$gvim_instance" --remote-silent "${@%%:*}"
+    gvim --servername "$gvim_server" --name "$gvim_instance" --remote-silent "${files[@]}"
     wmctrl -xa "$gvim_instance.Gvim"
 fi
