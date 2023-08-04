@@ -27,7 +27,6 @@ for f in "$@"; do
     files+=("$(readlink -f "${f%%:*}")")
 done
 
-    echo "nvim_server=$nvim_server"
 if [ -e "$nvim_server" ]; then
     nvim --server "$nvim_server" --remote-silent "${files[@]}"
     wmctrl -xa "$nvim_instance.nvim-qt"
