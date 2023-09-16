@@ -9,7 +9,7 @@ import argparse
 import time
 
 
-__version__ = "0.1.1"
+__version__ = "0.2.0"
 
 
 description = """
@@ -49,6 +49,19 @@ def inner_main():
 
     parser.add_argument("--version", action="version", version=__version__)
     parser.add_argument(
+        "--start-time",
+        action="store",
+        dest="start_time",
+        help="""choose alternate starting time in seconds""",
+    )
+    parser.add_argument(
+        "-0",
+        action="store_const",
+        dest="start_time",
+        const="0",
+        help="""equivalent to `--start-time 0`""",
+    )
+    parser.add_argument(
         "--delta",
         action="store_true",
         dest="use_delta_time",
@@ -57,13 +70,18 @@ def inner_main():
     )
 
     args = parser.parse_args(namespace=Args())
-    last_time = time.time()
+    first_time = time.time()
+    last_time = first_time
+    if args.start_time is not None:
+        start_time = float(args.start_time)
+    else:
+        start_time = last_time
     for line in sys.stdin:
         now = time.time()
         if args.use_delta_time:
             t = now - last_time
         else:
-            t = now
+            t = now - first_time + start_time
         sys.stdout.write("%.9f %s" % (t, line))
         last_time = now
 
