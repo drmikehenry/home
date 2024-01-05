@@ -38,8 +38,9 @@ set keymap emacs
 # issue "c\C-[" to start and then abort an edit to force a prompt update:
 "\ee": "\e1<vi-editing-mode>\C-[c\C-["
 
+# Note: Escape is too easy to hit by mistake; commenting this out for now.
 # Escape -> switch to vi-movement-mode.
-"\C-[": "\ee"
+# "\C-[": "\ee"
 
 # In all vi modes, M-e returns to emacs mode (as does pressing Enter).
 set keymap vi
