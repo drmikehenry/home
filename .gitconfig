@@ -71,10 +71,10 @@
 # With ssh connection reuse, it's 6 seconds.  Generally, we'll use
 # NFS, but when on the road, can change to ssh: below to perform
 # remote git operations.
-[url "file:///m/srv/git/"]
-	insteadof = wench:
-#[url "ssh://wench/srv/git/"]
+#[url "file:///m/srv/git/"]
 #	insteadof = wench:
+[url "ssh://wench/srv/git/"]
+	insteadof = wench:
 
 [github]
 	user = drmikehenry
@@ -94,3 +94,6 @@
 	sslbackend
 [rerere]
 	enabled = true
+
+[include]
+	path = ~/.gitconfig2
