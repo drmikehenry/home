@@ -4,11 +4,12 @@
 import argparse
 import hashlib
 import sys
+import typing
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 
-def printable_line(line, config):
+def printable_line(line: str, config: argparse.Namespace) -> str:
     expect_cr = config.line_endings == "dos"
     if line.endswith("\n"):
         line = line[:-1]
@@ -41,7 +42,7 @@ def printable_line(line, config):
     return out
 
 
-def process_file(f, config):
+def process_file(f: typing.BinaryIO, config: argparse.Namespace) -> None:
     h = hashlib.sha256()
     for line_num, raw_line in enumerate(f, 1):
         h.update(raw_line)
@@ -55,7 +56,7 @@ def process_file(f, config):
         sys.stdout.write("{} {}{}".format(d, line_num_str, out))
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser()
 
     parser.add_argument(
@@ -74,7 +75,14 @@ def main():
         "-l",
         "--line-numbers",
         action="store_true",
-        default=False,
+        default=True,
+        help="""use line numbers""",
+    )
+
+    parser.add_argument(
+        "--no-line-numbers",
+        action="store_false",
+        dest="line_numbers",
         help="""use line numbers""",
     )
 
@@ -98,7 +106,7 @@ def main():
     if config.tab_size < 1:
         parser.error("--tab-size must be at least one")
 
-    def print_name(name):
+    def print_name(name: str) -> None:
         print("---------- «{}» ----------".format(name))
 
     for name in config.files:
