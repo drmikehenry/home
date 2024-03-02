@@ -80,8 +80,6 @@
 	user = drmikehenry
 [url "https://github.com/"]
 	insteadof = gh:
-[url "git@github.com:drmikehenry/"]
-	insteadof = dmh:
 [push]
 	default = simple
 
