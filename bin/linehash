@@ -6,7 +6,7 @@ import hashlib
 import sys
 import typing
 
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 
 
 def printable_line(line: str, config: argparse.Namespace) -> str:
@@ -83,7 +83,7 @@ def main() -> None:
         "--no-line-numbers",
         action="store_false",
         dest="line_numbers",
-        help="""use line numbers""",
+        help="""do not use line numbers""",
     )
 
     parser.add_argument(
