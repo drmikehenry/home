@@ -1,0 +1,32 @@
+#!/bin/bash
+
+die()
+{
+    echo "$@" 1>&2
+    exit 2
+}
+
+classname="google-chrome"
+
+# For some reason, the first `xdotool search` operation is unreliable.
+# Merely repeating the operation seems to fix things.
+newwin=$(xdotool search --onlyvisible --classname "$classname") ||
+    newwin=$(xdotool search --onlyvisible --classname "$classname") ||
+    die "failed to find matching window"
+
+# If replacing newlines with spaces changes things, found 2 or more windows.
+newwin2=${newwin//$'\n'/ }
+[ "$newwin" == "$newwin2" ] ||
+    die "matched multiple windows: $newwin2"
+
+oldwin=$(xdotool getwindowfocus) ||
+    die "failed to find current window"
+
+# If this script is launched via a hotkey (such as Ctrl-Alt-u), Chrome will
+# see the modifier keys as being pressed when the `F5` is sent.  To avoid this,
+# use the `--clearmodifiers` flag, which reads the current modifier state,
+# clears all modifiers, sends the key, then restores the original modifiers.
+xdotool windowactivate --sync "$newwin" \
+        key --clearmodifiers 'F5' \
+        windowactivate "$oldwin" ||
+    die "Error in final refresh operation"
