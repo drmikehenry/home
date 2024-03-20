@@ -1,4 +1,4 @@
 if $VIMUSER == ""
     let $VIMUSER = "drmikehenry"
 endif
-runtime vimrc
+source ~/.vim/vimrc
