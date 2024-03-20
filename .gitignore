@@ -45,6 +45,7 @@
 /.mplayer/
 /.multirust
 /.mypki
+/.npm/
 /.pki/
 /.pyenv/
 /.pylint.d/
