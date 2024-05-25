@@ -1,1 +1,1 @@
-[ -n "$SSH_AGENT_PID" ] || eval "$(ssh-agent -s)"
+[ -n "$SSH_AUTH_SOCK" ] || eval "$(ssh-agent -s)"
