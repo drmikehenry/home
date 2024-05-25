@@ -10,8 +10,8 @@ fi
 rundir="${XDG_RUNTIME_DIR:-/tmp/user-$(id -u)}"
 
 # Pairs with:
-#   activate "nvim-qt --name NVIM0 -- --listen $rundir/NVIM0" "NVIM0.nvim-qt"
-#   activate "nvim-qt --name NVIM) -- --listen $rundir/NVIM)" "NVIM).nvim-qt"
+#   wmctrl -a NVIM0 || nvim-qt -- --listen ${XDG_RUNTIME_DIR:-/tmp/user-$(id -u)}/NVIM0
+#   wmctrl -a NVIM) || nvim-qt -- --listen ${XDG_RUNTIME_DIR:-/tmp/user-$(id -u)}/NVIM)
 nvim_instance="NVIM$instance"
 nvim_server="$rundir/$nvim_instance"
 
@@ -29,7 +29,7 @@ done
 
 if [ -e "$nvim_server" ]; then
     nvim --server "$nvim_server" --remote-silent "${files[@]}"
-    wmctrl -xa "$nvim_instance.nvim-qt"
+    wmctrl -a "$nvim_instance"
 else
     gvim --servername "$gvim_server" --name "$gvim_instance" --remote-silent "${files[@]}"
     wmctrl -xa "$gvim_instance.Gvim"
