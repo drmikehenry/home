@@ -4,6 +4,16 @@ export PROFILE_SOURCED=YES
 
 umask 002
 
+# In case `~/.ssh` got created with bad permissions via `homegit`, check and
+# correct the permissions at login.
+test -d ~/.ssh && find ~/.ssh -prune \( \
+  -perm -g=r -o \
+  -perm -g=w -o \
+  -perm -g=x -o \
+  -perm -o=r -o \
+  -perm -o=w -o \
+  -perm -o=x \) -exec chmod 700 {} +
+
 # Append to PATH (so that network search is done last).
 pathappend "$HOME/x/bin"
 
