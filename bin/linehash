@@ -6,7 +6,21 @@ import hashlib
 import sys
 import typing
 
-__version__ = "0.1.3"
+__version__ = "0.2.0"
+
+
+bootstrap = """\
+#!/usr/bin/env python3
+
+import hashlib
+import sys
+
+h = hashlib.sha256()
+with open(sys.argv[1], "rb") as f:
+    for i, raw_line in enumerate(f, 1):
+        h.update(raw_line)
+        sys.stdout.write(f"{h.hexdigest()[:10]} {i:3} {raw_line.decode()}")
+"""
 
 
 def printable_line(line: str, config: argparse.Namespace) -> str:
@@ -67,8 +81,8 @@ def main() -> None:
         "files",
         metavar="FILE",
         action="store",
-        nargs="+",
-        help="files to process (use `-` for stdin)",
+        nargs="*",
+        help="files to process (use `-` for stdin); default to stdin",
     )
 
     parser.add_argument(
@@ -102,13 +116,26 @@ def main() -> None:
         help="""size of tab (default: %(default)s)""",
     )
 
+    parser.add_argument(
+        "--bootstrap",
+        action="store_true",
+        default=False,
+        help="""display `bootstrap` program for typing in `linehash` itself""",
+    )
+
     config = parser.parse_args()
     if config.tab_size < 1:
         parser.error("--tab-size must be at least one")
 
+    if config.bootstrap:
+        sys.stdout.write(bootstrap)
+        return
+
     def print_name(name: str) -> None:
         print("---------- «{}» ----------".format(name))
 
+    if not config.files:
+        config.files = ["-"]
     for name in config.files:
         if name == "-":
             print_name("<stdin>")
