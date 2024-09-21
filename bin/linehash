@@ -6,7 +6,7 @@ import hashlib
 import sys
 import typing
 
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 
 
 bootstrap = """\
@@ -19,8 +19,23 @@ h = hashlib.sha256()
 with open(sys.argv[1], "rb") as f:
     for i, raw_line in enumerate(f, 1):
         h.update(raw_line)
-        sys.stdout.write(f"{h.hexdigest()[:10]} {i:3} {raw_line.decode()}")
+        line = raw_line.decode()
+        sys.stdout.write("{} {:3} {}".format(h.hexdigest()[:10], i, line))
 """
+
+
+left_chevron = "\u00ab"
+right_chevron = "\u00bb"
+thin_cr = "\u240d"
+left_tee = "\u251c"
+horiz_bar = "\u2500"
+right_tee = "\u2524"
+arrow = "\u21a6"
+dot = "\u2022"
+
+
+def chev(s: str) -> str:
+    return left_chevron + s + right_chevron
 
 
 def printable_line(line: str, config: argparse.Namespace) -> str:
@@ -29,30 +44,30 @@ def printable_line(line: str, config: argparse.Namespace) -> str:
         line = line[:-1]
         lf = "\n"
     else:
-        lf = "«no LF»\n"
+        lf = chev("no LF") + "\n"
     if line.endswith("\r"):
         line = line[:-1]
-        cr = "" if expect_cr else "«CR»"
+        cr = "" if expect_cr else chev("CR")
     else:
-        cr = "«no CR»" if expect_cr else ""
+        cr = chev("no CR") if expect_cr else ""
     trimmed_line = line.rstrip(" ")
     out_chars = []
     for i, c in enumerate(trimmed_line):
         if c == "\r":
-            out_chars.append("␍")
+            out_chars.append(thin_cr)
         elif c == "\t":
             tab_size = config.tab_size
             width = tab_size - (i % tab_size)
             if width > 1:
-                out_chars.append("├")
-                out_chars.append("─" * (width - 2))
-                out_chars.append("┤")
+                out_chars.append(left_tee)
+                out_chars.append(horiz_bar * (width - 2))
+                out_chars.append(right_tee)
             else:
-                out_chars.append("↦")
+                out_chars.append(arrow)
         else:
             out_chars.append(c)
     final_spaces = len(line) - len(trimmed_line)
-    out = "".join(out_chars) + ("•" * final_spaces) + cr + lf
+    out = "".join(out_chars) + (dot * final_spaces) + cr + lf
     return out
 
 
@@ -132,7 +147,7 @@ def main() -> None:
         return
 
     def print_name(name: str) -> None:
-        print("---------- «{}» ----------".format(name))
+        print("---------- {} ----------".format(chev(name)))
 
     if not config.files:
         config.files = ["-"]
