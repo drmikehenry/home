@@ -46,10 +46,25 @@ fi
 
 PS1='[${debian_chroot:+($debian_chroot)}\u@\h:\W]\$ '
 
-# If this is an xterm set the title to user@host:dir.
+# If this is an xterm, set the title to user@host:dir.
 case "$TERM" in
 xterm*|rxvt*)
     PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \W\a\]$PS1"
+    ;;
+*)
+    ;;
+esac
+
+# If this is an xterm, setup "Semantic Shell" escape sequences.
+# See Konsole help for more information.
+# Don't re-add support if already present.
+case "$TERM" in
+xterm*|rxvt*)
+    if [[ ! $PS1 =~ 133 ]] ; then
+        PS1='\[\e]133;L\a\e]133;D;$?\e]133;A\a\]'$PS1'\[\e]133;B\a\]' ;
+        PS2='\[\e]133;A\a\]'$PS2'\[\e]133;B\a\]' ;
+        PS0='\[\e]133;C\a\]'
+    fi
     ;;
 *)
     ;;
