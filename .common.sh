@@ -9,11 +9,11 @@ pathcontains() {
 }
 
 pathappend() {
-    test -d "$1" && ! pathcontains "$1" && PATH="$PATH:$1"
+    pathcontains "$1" || PATH="$PATH:$1"
 }
 
 pathprepend() {
-    test -d "$1" && ! pathcontains "$1" && PATH="$1:$PATH"
+    pathcontains "$1" || PATH="$1:$PATH"
 }
 
 # Ruby support.
