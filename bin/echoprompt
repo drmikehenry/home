@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# "Semantic Shell" integration using OSC 133:
+prompt_start=$'\e]133;A\a'
+prompt_end=$'\e]133;B\a'
+prompt_pre_exec=$'\e]133;C\a'
+
+printf "$prompt_start%s$prompt_end\n$prompt_pre_exec" "$*"
