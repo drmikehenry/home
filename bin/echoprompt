@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # "Semantic Shell" integration using OSC 133:
+# From: <https://iterm2.com/documentation-escape-codes.html>
 prompt_start=$'\e]133;A\a'
 prompt_end=$'\e]133;B\a'
 prompt_pre_exec=$'\e]133;C\a'

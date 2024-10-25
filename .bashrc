@@ -61,6 +61,11 @@ esac
 case "$TERM" in
 xterm*|rxvt*)
     if [[ ! $PS1 =~ 133 ]] ; then
+        # Semantic Shell integration using OSC 133:
+        # From: <https://iterm2.com/documentation-escape-codes.html>
+        # prompt_start=$'\e]133;A\a'
+        # prompt_end=$'\e]133;B\a'
+        # prompt_pre_exec=$'\e]133;C\a'
         PS1='\[\e]133;L\a\e]133;D;$?\e]133;A\a\]'$PS1'\[\e]133;B\a\]' ;
         PS2='\[\e]133;A\a\]'$PS2'\[\e]133;B\a\]' ;
         PS0='\[\e]133;C\a\]'
