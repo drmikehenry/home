@@ -293,6 +293,13 @@ if [ -n "$(command -v virtualenvwrapper.sh)" ]; then
 fi
 
 ##############################################################################
+# `uv` support
+
+if [ -n "$(command -v uv)" ]; then
+    eval "$(uv generate-shell-completion bash)"
+fi
+
+##############################################################################
 # Enable completion support.
 if ! shopt -oq posix; then
     if [ -f /usr/share/bash-completion/bash_completion ]; then
