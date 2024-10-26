@@ -55,6 +55,13 @@ xterm*|rxvt*)
     ;;
 esac
 
+# Add prompt support for `VIRTUAL_ENV` display.
+# Disable the use of a venv's own prompt modification upon `activate`, as it
+# will end up outside of any "Semantic Shell" escapes in that case:
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+# Calculate basename of venv.
+PS1='${VIRTUAL_ENV:+($(basename "$VIRTUAL_ENV")) }'"$PS1"
+
 # If this is an xterm, setup "Semantic Shell" escape sequences.
 # See Konsole help for more information.
 # Don't re-add support if already present.
