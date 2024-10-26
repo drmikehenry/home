@@ -38,12 +38,15 @@ pathprepend "$HOME/.cargo/bin"
 # virtualenv support.
 export WORKON_HOME=$HOME/envs
 export PROJECT_HOME=$HOME/projects
-VIRTUALENVWRAPPER_PYTHON=/usr/local/lib/pipx/venvs/virtualenvwrapper/bin/python
-if [ -x "$VIRTUALENVWRAPPER_PYTHON" ]; then
-    export VIRTUALENVWRAPPER_PYTHON
-else
-    unset VIRTUALENVWRAPPER_PYTHON
-fi
+for _p in uv-tool pipx/venvs; do
+    VIRTUALENVWRAPPER_PYTHON="/usr/local/lib/$_p/virtualenvwrapper/bin/python"
+    if [ -x "$VIRTUALENVWRAPPER_PYTHON" ]; then
+        export VIRTUALENVWRAPPER_PYTHON
+        break
+    else
+        unset VIRTUALENVWRAPPER_PYTHON
+    fi
+done
 
 # Per-host PATH.
 HOSTNAME="$(hostname)"
