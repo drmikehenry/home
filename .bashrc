@@ -228,6 +228,7 @@ diffwrap()
     colordiff=$(type -P colordiff)
     if isatty && test -n "$colordiff"; then
         command diff "$@" | colordiff
+        return "${PIPESTATUS[0]}"
     else
         command diff "$@"
     fi
