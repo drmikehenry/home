@@ -1,0 +1,26 @@
+#!/bin/sh
+
+if [ -z "$1" ]; then
+    cat <<'EOF'
+Usage: certcheck host.domain[:PORT]
+
+`:PORT` defaults to `:443`.
+
+E.g.:
+
+  certcheck host1.domain
+  certcheck host2.domain:1234
+EOF
+    exit 1
+fi
+
+host="$1"
+
+if [ "$host" = "${host%:*}" ]; then
+    host="$host:443"
+fi
+
+echo "checking $host..."
+result="$(< /dev/null openssl s_client -connect "$host")"
+printf '%s\n' "$result"
+printf '%s\n' "$result" | grep -oi 'notafter.*' --color=auto
