@@ -65,22 +65,28 @@ PS1='${VIRTUAL_ENV:+($(basename "$VIRTUAL_ENV")) }'"$PS1"
 # If this is an xterm, setup "Semantic Shell" escape sequences.
 # See Konsole help for more information.
 # Don't re-add support if already present.
-case "$TERM" in
-xterm*|rxvt*)
-    if [[ ! $PS1 =~ 133 ]] ; then
-        # Semantic Shell integration using OSC 133:
-        # From: <https://iterm2.com/documentation-escape-codes.html>
-        # prompt_start=$'\e]133;A\a'
-        # prompt_end=$'\e]133;B\a'
-        # prompt_pre_exec=$'\e]133;C\a'
-        PS1='\[\e]133;L\a\e]133;D;$?\e]133;A\a\]'$PS1'\[\e]133;B\a\]' ;
-        PS2='\[\e]133;A\a\]'$PS2'\[\e]133;B\a\]' ;
-        PS0='\[\e]133;C\a\]'
-    fi
-    ;;
-*)
-    ;;
-esac
+# Avoid Bash previous to version 4.4 (which is where `PS0` was introduced).
+if [ "${BASH_VERSINFO[0]}" -gt 4 ] || {
+            [ "${BASH_VERSINFO[0]}" -eq 4 ] &&
+            [ "${BASH_VERSINFO[1]}" -ge 4 ];
+        }; then
+    case "$TERM" in
+    xterm*|rxvt*)
+        if [[ ! $PS1 =~ 133 ]] ; then
+            # Semantic Shell integration using OSC 133:
+            # From: <https://iterm2.com/documentation-escape-codes.html>
+            # prompt_start=$'\e]133;A\a'
+            # prompt_end=$'\e]133;B\a'
+            # prompt_pre_exec=$'\e]133;C\a'
+            PS1='\[\e]133;L\a\e]133;D;$?\e]133;A\a\]'$PS1'\[\e]133;B\a\]' ;
+            PS2='\[\e]133;A\a\]'$PS2'\[\e]133;B\a\]' ;
+            PS0='\[\e]133;C\a\]'
+        fi
+        ;;
+    *)
+        ;;
+    esac
+fi
 
 # User specific aliases and functions
 
