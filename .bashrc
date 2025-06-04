@@ -340,6 +340,12 @@ if [ -n "$(command -v starship)" ]; then
     # eval "$(starship init bash)"
 fi
 
+# Zoxide support
+
+if [ -n "$(command -v zoxide)" ]; then
+    eval "$(zoxide init bash)"
+fi
+
 ##############################################################################
 # Readline key bindings and settings.
 # Syntax: "\e" means escape.  Bash sends Alt-x as Escape-x ==> "\ex".
