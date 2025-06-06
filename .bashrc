@@ -311,8 +311,8 @@ alias home2git='GIT_DIR=~/.home2.git GIT_WORK_TREE=~  git'
 ##############################################################################
 # Python support
 
-if [ -n "$(command -v virtualenvwrapper.sh)" ]; then
-    . virtualenvwrapper.sh
+if [ -n "$(command -v uv-virtualenvwrapper.sh)" ]; then
+    . uv-virtualenvwrapper.sh
 fi
 
 ##############################################################################
