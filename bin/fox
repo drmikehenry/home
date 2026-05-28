@@ -1,0 +1,9 @@
+#!/bin/bash
+
+rex='^libvinfo'
+rex+='|^libva info:'
+rex+='|^ATTENTION: default value of option mesa_glthread overridden'
+rex+='|Sandbox: attempt to open unexpected file'
+rex+='|Shutdown called before Glean is initialized'
+
+firefox "$@" |& grep -vP "$rex"
