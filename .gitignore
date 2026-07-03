@@ -5,6 +5,9 @@
 /.cargo/
 /.cisco/
 /.clangd/
+/.claude-monitor/
+/.claude.json
+/.claude/
 /.config/
 /.cookiecutter_replay/
 /.cookiecutters/
@@ -17,6 +20,7 @@
 /.face
 /.face.icon
 /.fltk/
+/.fonts.conf
 /.fonts/
 /.gconf/
 /.gdb_history
